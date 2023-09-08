@@ -9,28 +9,29 @@ class DataManager:
     def __init__(self):
         self.fr = FR
         self.en = EN
-        self.data = None
         self.word_list = []
+        self.word = None
         self.pull_data()
-        self.correct_list = []
         self.fr_word = None
         self.en_word = None
         self.get_word()
 
+    # Pull data from csv using Pandas lib
     def pull_data(self):
         data = pandas.read_csv("./data/french_words.csv")
         self.word_list = data.to_dict(orient="records")
 
+    # Get a random word from word_list
     def get_word(self):
-        word = random.choice(self.word_list)
-        self.fr_word = word[FR]
-        self.en_word = word[EN]
+        self.word = random.choice(self.word_list)
+        self.fr_word = self.word[FR]
+        self.en_word = self.word[EN]
 
-        print(self.correct_list)
-
+    # If user got the word correctly remove word from word_list
     def got_correct(self):
-        self.correct_list.append(self.fr_word)
+        self.word_list.remove(self.word)
         self.get_word()
 
+    # If user got the word wrong, get a new word
     def got_wrong(self):
         self.get_word()
