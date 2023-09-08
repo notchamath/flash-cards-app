@@ -23,14 +23,18 @@ class DataManager:
 
     # Get a random word from word_list
     def get_word(self):
-        self.word = random.choice(self.word_list)
-        self.fr_word = self.word[FR]
-        self.en_word = self.word[EN]
+        if len(self.word_list) > 0:
+            self.word = random.choice(self.word_list)
+            self.fr_word = self.word[FR]
+            self.en_word = self.word[EN]
 
     # If user got the word correctly remove word from word_list
     def got_correct(self):
-        self.word_list.remove(self.word)
-        self.get_word()
+        if len(self.word_list) > 0:
+            self.word_list.remove(self.word)
+            data = pandas.DataFrame(self.word_list)
+            data.to_csv("./data/to_learn.csv")
+            self.get_word()
 
     # If user got the word wrong, get a new word
     def got_wrong(self):
