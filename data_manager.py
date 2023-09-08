@@ -18,11 +18,19 @@ class DataManager:
 
     # Pull data from csv using Pandas lib
     def pull_data(self):
+        # Load user's saved progress
         try:
             data = pandas.read_csv("./data/to_learn.csv")
+
+        # If there is no saved progress file, start with original file
         except FileNotFoundError:
             original_data = pandas.read_csv("./data/french_words.csv")
             self.word_list = original_data.to_dict(orient="records")
+
+        # If user has already finished all words
+        except pandas.errors.EmptyDataError:
+            self.completed()
+
         else:
             self.word_list = data.to_dict(orient="records")
 
@@ -40,7 +48,7 @@ class DataManager:
         if len(self.word_list) > 0:
             self.word_list.remove(self.word)
             data = pandas.DataFrame(self.word_list)
-            data.to_csv("./data/to_learn.csv")
+            data.to_csv("./data/to_learn.csv", index=False)
             self.get_word()
 
     # If user got the word wrong, get a new word
