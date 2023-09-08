@@ -47,7 +47,7 @@ window = Tk()
 window.title("FLASH CARDS")
 window.config(pady=50, padx=50, bg=BACKGROUND_COLOR)
 
-# Flip card after 3 seconds
+# declare flip_delay as a global variable here so next_card() has an already set timer to cancel
 flip_delay = window.after(3000, flip_card)
 
 # Canvas
