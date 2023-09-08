@@ -7,6 +7,8 @@ EN = "English"
 
 class DataManager:
     def __init__(self):
+        self.fr = FR
+        self.en = EN
         self.data = None
         self.word_list = []
         self.pull_data()
